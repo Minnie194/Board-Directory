@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Board Directory</title>
 
-  <!-- DM Sans -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Lucide Icons -->
+  <!-- Lucide -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -25,17 +25,7 @@
       transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .rotate {
-      transform: rotate(90deg);
-    }
-    .item {
-      background: #ffffff;
-      border-radius: 0.75rem;
-      padding: 0.75rem 1rem;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease;
-    }
-    .item:hover {
-      transform: translateX(6px);
+      transform: rotate(180deg);
     }
   </style>
 </head>
@@ -54,13 +44,13 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="activity"></i> Trackers
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="trackers" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
-      <a href="https://motionpictures.monday.com/boards/1861276763" target="_blank" class="item block">K&amp;T Tracker</a>
-      <a href="https://motionpictures.monday.com/boards/1789025441" target="_blank" class="item block">Criminal Referrals</a>
-      <a href="https://motionpictures.monday.com/boards/1788262726" target="_blank" class="item block">Application Takedowns</a>
-      <a href="https://motionpictures.monday.com/boards/1797290553" target="_blank" class="item block">IWL</a>
+    <div id="trackers" class="panel max-h-0 bg-white rounded-xl shadow px-5 py-4 text-sm space-y-1">
+      https://motionpictures.monday.com/boards/1861276763 K&amp;T Tracker<br>
+      https://motionpictures.monday.com/boards/1789025441 Criminal Referrals<br>
+      https://motionpictures.monday.com/boards/1788262726 Application Takedowns<br>
+      https://motionpictures.monday.com/boards/1797290553 IWL
     </div>
 
     <!-- Reporting -->
@@ -69,12 +59,12 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="bar-chart-3"></i> Reporting
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="reporting" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
-      <a href="https://motionpictures.monday.com/boards/1909180597" target="_blank" class="item block">Weekly Updates</a>
-      <a href="https://motionpictures.monday.com/boards/5092300043" target="_blank" class="item block">ACE Action Plans &amp; Litigation Strategy</a>
-      <a href="https://motionpictures.monday.com/boards/1860764866" target="_blank" class="item block">Repository</a>
+    <div id="reporting" class="panel max-h-0 bg-white rounded-xl shadow px-5 py-4 text-sm space-y-1">
+      https://motionpictures.monday.com/boards/1909180597 Weekly Updates<br>
+      https://motionpictures.monday.com/boards/5092300043 ACE Action Plans &amp; Litigation Strategy<br>
+      https://motionpictures.monday.com/boards/1860764866 Repository
     </div>
 
     <!-- Landscapes -->
@@ -83,10 +73,10 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="map"></i> Landscapes
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="landscapes" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
-      <a href="https://motionpictures.monday.com/boards/2140925236" target="_blank" class="item block">Top List Directory</a>
+    <div id="landscapes" class="panel max-h-0 bg-white rounded-xl shadow px-5 py-4 text-sm space-y-1">
+      https://motionpictures.monday.com/boards/2140925236 Top List Directory
     </div>
 
     <!-- GSS -->
@@ -95,14 +85,14 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="shield-alert"></i> GSS
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="gss" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
-      <a href="https://motionpictures.monday.com/boards/1735781645" target="_blank" class="item block">SB Around the World</a>
-      <a href="https://motionpictures.monday.com/boards/1901785736" target="_blank" class="item block">SB Cases</a>
-      <a href="https://motionpictures.monday.com/boards/1736947920" target="_blank" class="item block">CJEU Overview</a>
-      <a href="https://motionpictures.monday.com/boards/2073211338" target="_blank" class="item block">AI &amp; Copyright Case Law</a>
-      <a href="https://motionpictures.monday.com/boards/1959576984" target="_blank" class="item block">Member Action Required (GSS)</a>
+    <div id="gss" class="panel max-h-0 bg-white rounded-xl shadow px-5 py-4 text-sm space-y-1">
+      https://motionpictures.monday.com/boards/1735781645 SB Around the World<br>
+      https://motionpictures.monday.com/boards/1901785736 SB Cases<br>
+      https://motionpictures.monday.com/boards/1736947920 CJEU Overview<br>
+      https://motionpictures.monday.com/boards/2073211338 AI &amp; Copyright Case Law<br>
+      https://motionpictures.monday.com/boards/1959576984 Member Action Required (GSS)
     </div>
 
   </div>
@@ -114,16 +104,16 @@
   document.querySelectorAll('.section').forEach(btn => {
     btn.addEventListener('click', () => {
       const panel = document.getElementById(btn.dataset.target);
+      const icon = btn.querySelector('.chevron');
 
       document.querySelectorAll('.panel').forEach(p => {
         if (p !== panel) p.style.maxHeight = null;
       });
-
       document.querySelectorAll('.chevron').forEach(c => c.classList.remove('rotate'));
 
       if (!panel.style.maxHeight) {
         panel.style.maxHeight = panel.scrollHeight + 'px';
-        btn.querySelector('.chevron').classList.add('rotate');
+        icon.classList.add('rotate');
       }
     });
   });
@@ -131,3 +121,4 @@
 
 </body>
 </html>
+``
