@@ -22,10 +22,19 @@
     }
     .panel {
       overflow: hidden;
-      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.4s ease;
     }
     .rotate {
-      transform: rotate(90deg);
+      transform: rotate(180deg);
+    }
+    .link {
+      display: block;
+      padding: 0.4rem 0;
+      color: #0f172a;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -44,10 +53,10 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="activity"></i> Trackers
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="trackers" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
-      https://motionpictures.monday.com/boards/1861276763K&T Tracker</a>
+    <div id="trackers" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
+      https://motionpictures.monday.com/boards/1861276763K&amp;T Tracker</a>
       https://motionpictures.monday.com/boards/1789025441Criminal Referrals</a>
       https://motionpictures.monday.com/boards/1788262726Application Takedowns</a>
       https://motionpictures.monday.com/boards/1797290553IWL</a>
@@ -59,11 +68,11 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="bar-chart-3"></i> Reporting
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="reporting" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
+    <div id="reporting" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
       https://motionpictures.monday.com/boards/1909180597Weekly Updates</a>
-      https://motionpictures.monday.com/boards/5092300043ACE Action Plans & Litigation Strategy</a>
+      https://motionpictures.monday.com/boards/5092300043ACE Action Plans &amp; Litigation Strategy</a>
       https://motionpictures.monday.com/boards/1860764866Repository</a>
     </div>
 
@@ -73,12 +82,10 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="map"></i> Landscapes
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="landscapes" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
+    <div id="landscapes" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
       https://motionpictures.monday.com/boards/2140925236Top List Directory</a>
-      https://motionpictures.monday.com/boards/2125862831APAC IPTV</a>
-      https://motionpictures.monday.com/boards/2116342394APAC Streaming</a>
     </div>
 
     <!-- GSS -->
@@ -87,11 +94,14 @@
       <span class="flex items-center gap-2 font-semibold">
         <i data-lucide="shield-alert"></i> GSS
       </span>
-      <i data-lucide="arrow-right" class="chevron transition-transform"></i>
+      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
     </button>
-    <div id="gss" class="panel max-h-0 bg-white rounded-xl shadow px-4 py-3 space-y-2">
+    <div id="gss" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
       https://motionpictures.monday.com/boards/1735781645SB Around the World</a>
       https://motionpictures.monday.com/boards/1901785736SB Cases</a>
+      https://motionpictures.monday.com/boards/1736947920CJEU Overview</a>
+      https://motionpictures.monday.com/boards/2073211338AI &amp; Copyright Case Law</a>
+      https://motionpictures.monday.com/boards/1959576984Member Action Required (GSS)</a>
     </div>
 
   </div>
@@ -103,16 +113,16 @@
   document.querySelectorAll('.section').forEach(btn => {
     btn.addEventListener('click', () => {
       const panel = document.getElementById(btn.dataset.target);
+      const icon = btn.querySelector('.chevron');
 
       document.querySelectorAll('.panel').forEach(p => {
         if (p !== panel) p.style.maxHeight = null;
       });
-
       document.querySelectorAll('.chevron').forEach(c => c.classList.remove('rotate'));
 
       if (!panel.style.maxHeight) {
         panel.style.maxHeight = panel.scrollHeight + 'px';
-        btn.querySelector('.chevron').classList.add('rotate');
+        icon.classList.add('rotate');
       }
     });
   });
