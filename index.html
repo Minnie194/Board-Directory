@@ -2,131 +2,170 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Board Directory</title>
 
-  <!-- Fonts -->
-  https://fonts.googleapis.com
-  https://fonts.gstatic.com
-  https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind -->
-  https://cdn.tailwindcss.comscript>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Icons -->
-  https://unpkg.com/lucide@latestscript>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: "DM Sans", sans-serif;
       background: #f1f5f9;
+      margin: 0;
     }
+
     .panel {
+      max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease;
+      transition: max-height 0.3s ease;
     }
-    .rotate {
+
+    .chevron {
+      transition: transform 0.3s ease;
+    }
+
+    .chevron.rotate {
       transform: rotate(180deg);
     }
-    .link {
+
+    .board-link {
       display: block;
-      padding: 0.5rem 0;
-      color: #0f172a;
       text-decoration: none;
+      color: #0f172a;
+      font-size: 15px;
+      padding: 8px 0;
     }
-    .link:hover {
+
+    .board-link:hover {
       text-decoration: underline;
+    }
+
+    .board-link + .board-link {
+      border-top: 1px solid #e2e8f0;
     }
   </style>
 </head>
 
 <body class="p-6">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold text-slate-900">Board Directory</h1>
+    <div class="h-1 w-28 bg-blue-600 mt-2 mb-5 rounded-full"></div>
 
-<div class="max-w-4xl mx-auto">
-  <h1 class="text-2xl font-bold">Board Directory</h1>
-  <div class="h-1 w-24 bg-blue-600 my-3 rounded"></div>
+    <div class="space-y-4">
 
-  <div class="space-y-4">
+      <!-- Trackers -->
+      <div>
+        <button class="accordion-btn w-full bg-blue-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="trackers">
+          <span class="flex items-center gap-3 font-semibold">
+            <i data-lucide="activity" class="w-5 h-5"></i>
+            Trackers
+          </span>
+          <i data-lucide="chevron-down" class="w-5 h-5 chevron"></i>
+        </button>
 
-    <!-- Trackers -->
-    <button class="section bg-blue-600 text-white rounded-xl px-5 py-4 flex justify-between items-center w-full"
-      data-target="trackers">
-      <span class="flex items-center gap-2 font-semibold">
-        <i data-lucide="activity"></i> Trackers
-      </span>
-      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
-    </button>
-    <div id="trackers" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
-      https://motionpictures.monday.com/boards/1861276763K&amp;T Tracker</a>
-      https://motionpictures.monday.com/boards/1789025441Criminal Referrals</a>
-      https://motionpictures.monday.com/boards/1788262726Application Takedowns</a>
-      https://motionpictures.monday.com/boards/1797290553IWL</a>
+        <div id="trackers" class="panel mt-2">
+          <div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1861276763" target="_blank">K&amp;T Tracker</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1789025441" target="_blank">Criminal Referrals</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1788262726" target="_blank">Application Takedowns</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1797290553" target="_blank">IWL</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reporting -->
+      <div>
+        <button class="accordion-btn w-full bg-cyan-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="reporting">
+          <span class="flex items-center gap-3 font-semibold">
+            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            Reporting
+          </span>
+          <i data-lucide="chevron-down" class="w-5 h-5 chevron"></i>
+        </button>
+
+        <div id="reporting" class="panel mt-2">
+          <div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1909180597" target="_blank">Weekly Updates</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/5092300043" target="_blank">ACE Action Plans &amp; Litigation Strategy</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1860764866" target="_blank">Repository</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Landscapes -->
+      <div>
+        <button class="accordion-btn w-full bg-purple-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="landscapes">
+          <span class="flex items-center gap-3 font-semibold">
+            <i data-lucide="map" class="w-5 h-5"></i>
+            Landscapes
+          </span>
+          <i data-lucide="chevron-down" class="w-5 h-5 chevron"></i>
+        </button>
+
+        <div id="landscapes" class="panel mt-2">
+          <div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+            <a class="board-link" href="https://motionpictures.monday.com/boards/2140925236" target="_blank">Top List Directory</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/5090009562" target="_blank">APP Landscapes</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GSS -->
+      <div>
+        <button class="accordion-btn w-full bg-emerald-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="gss">
+          <span class="flex items-center gap-3 font-semibold">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+            GSS
+          </span>
+          <i data-lucide="chevron-down" class="w-5 h-5 chevron"></i>
+        </button>
+
+        <div id="gss" class="panel mt-2">
+          <div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1735781645" target="_blank">SB Around the World</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1901785736" target="_blank">SB Cases</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1736947920" target="_blank">CJEU Overview</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/2073211338" target="_blank">AI &amp; Copyright Case Law</a>
+            <a class="board-link" href="https://motionpictures.monday.com/boards/1959576984" target="_blank">Member Action Required (GSS)</a>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <!-- Reporting -->
-    <button class="section bg-cyan-600 text-white rounded-xl px-5 py-4 flex justify-between items-center w-full"
-      data-target="reporting">
-      <span class="flex items-center gap-2 font-semibold">
-        <i data-lucide="bar-chart-3"></i> Reporting
-      </span>
-      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
-    </button>
-    <div id="reporting" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
-      https://motionpictures.monday.com/boards/1909180597Weekly Updates</a>
-      https://motionpictures.monday.com/boards/5092300043ACE Action Plans &amp; Litigation Strategy</a>
-      https://motionpictures.monday.com/boards/1860764866Repository</a>
-    </div>
-
-    <!-- Landscapes -->
-    <button class="section bg-purple-600 text-white rounded-xl px-5 py-4 flex justify-between items-center w-full"
-      data-target="landscapes">
-      <span class="flex items-center gap-2 font-semibold">
-        <i data-lucide="map"></i> Landscapes
-      </span>
-      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
-    </button>
-    <div id="landscapes" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
-      https://motionpictures.monday.com/boards/2140925236Top List Directory</a>
-    </div>
-
-    <!-- GSS -->
-    <button class="section bg-emerald-600 text-white rounded-xl px-5 py-4 flex justify-between items-center w-full"
-      data-target="gss">
-      <span class="flex items-center gap-2 font-semibold">
-        <i data-lucide="shield-alert"></i> GSS
-      </span>
-      <i data-lucide="chevron-down" class="chevron transition-transform"></i>
-    </button>
-    <div id="gss" class="panel max-h-0 bg-white rounded-xl shadow px-6 py-4">
-      https://motionpictures.monday.com/boards/1735781645SB Around the World</a>
-      https://motionpictures.monday.com/boards/1901785736SB Cases</a>
-      https://motionpictures.monday.com/boards/1736947920CJEU Overview</a>
-      https://motionpictures.monday.com/boards/2073211338AI &amp; Copyright Case Law</a>
-      https://motionpictures.monday.com/boards/1959576984Member Action Required (GSS)</a>
-    </div>
-
   </div>
-</div>
 
-<script>
-  lucide.createIcons();
+  <script>
+    lucide.createIcons();
 
-  document.querySelectorAll('.section').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const panel = document.getElementById(btn.dataset.target);
-      const icon = btn.querySelector('.chevron');
+    const buttons = document.querySelectorAll(".accordion-btn");
+    const panels = document.querySelectorAll(".panel");
+    const chevrons = document.querySelectorAll(".chevron");
 
-      document.querySelectorAll('.panel').forEach(p => {
-        if (p !== panel) p.style.maxHeight = null;
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const targetId = button.getAttribute("data-target");
+        const targetPanel = document.getElementById(targetId);
+        const targetChevron = button.querySelector(".chevron");
+        const isOpen = targetPanel.style.maxHeight && targetPanel.style.maxHeight !== "0px";
+
+        panels.forEach(panel => panel.style.maxHeight = null);
+        chevrons.forEach(c => c.classList.remove("rotate"));
+
+        if (!isOpen) {
+          targetPanel.style.maxHeight = targetPanel.scrollHeight + "px";
+          targetChevron.classList.add("rotate");
+        }
       });
-      document.querySelectorAll('.chevron').forEach(c => c.classList.remove('rotate'));
-
-      if (!panel.style.maxHeight) {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-        icon.classList.add('rotate');
-      }
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
