@@ -240,13 +240,6 @@
       border-color: #c7d2e0;
     }
 
-    .note {
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--muted);
-      text-align: center;
-    }
-
     .accordion {
       display: grid;
       gap: 12px;
@@ -430,7 +423,7 @@
                   <svg viewBox="0 0 1000 520" aria-label="Clickable regional map">
                     <g opacity="0.18" fill="#94a3b8">
                       <path d="M77 158c18-20 34-38 63-44 41-9 71 10 96 7 19-3 29-16 49-14 35 3 50 35 63 58 15 27 31 44 21 67-13 29-67 28-84 53-15 22 6 52-12 69-19 18-52 9-82 0-39-11-90-34-111-76-18-36-21-87-3-120z"/>
-                      <path d="M403 120c40-16 90-21 134-14 25 4 44 16 70 19 33 4 71-6 103 5 35 12 61 41 81 72 22 35 25 72 8 104-18 32-53 57-92 66-34 8-74 4-107 16-33 12-55 38-89 48-32 10-73 3-96-23-24-27-23-68-21-104 3-43 7-86 9-129z"/>
+                      <path d="M403 120c40-16 90-21 134-14 25 4 44 16 70 19 33 4 71-6 103 5 35 12 61 41 81 72 22 35 25 72 8 104-18 32-53 57-92 66-34 8-74 4-107 16-33 12-55 38-89 48-32 10-73 3-96-23-24 27-23-68-21-104 3-43 7-86 9-129z"/>
                       <path d="M741 162c25-27 50-46 89-49 28-2 60 8 86 21 39 21 71 59 82 101 10 40-7 73-39 98-31 24-73 41-112 44-41 3-76-17-103-46-21-22-38-51-36-82 2-34 13-64 33-87z"/>
                       <path d="M705 362c22-8 45-6 64 4 18 10 32 29 39 49 7 20 8 45-6 61-14 16-40 22-62 17-21-4-41-18-50-38-9-20-6-45 15-61z"/>
                       <path d="M290 394c19-9 41-12 60-5 17 6 33 23 34 42 1 19-10 37-25 49-18 14-42 24-64 19-20-4-36-20-38-41-2-27 11-52 33-64z"/>
@@ -479,8 +472,6 @@
               </div>
             </div>
           </div>
-
-          <div class="note">Built for monday.com Embed widgets using top-level navigation.</div>
         </div>
 
         <div class="list-card">
@@ -498,6 +489,7 @@
 
   <script>
     const PLACEHOLDER_URL = "";
+    let currentRegion = null;
 
     const regionData = {
       apac: {
@@ -796,8 +788,14 @@
     }
 
     function openRegion(regionKey) {
-      const region = regionData[regionKey];
       const details = document.getElementById("mapDetails");
+
+      if (currentRegion === regionKey && details.classList.contains("open")) {
+        closeRegion();
+        return;
+      }
+
+      const region = regionData[regionKey];
       const title = document.getElementById("mapDetailsTitle");
       const subtitle = document.getElementById("mapDetailsSubtitle");
       const grid = document.getElementById("countryGrid");
@@ -820,13 +818,18 @@
       if (active) {
         active.classList.add("active");
       }
+
+      currentRegion = regionKey;
     }
 
     function closeRegion() {
       document.getElementById("mapDetails").classList.remove("open");
+
       document.querySelectorAll(".region").forEach(function(el) {
         el.classList.remove("active");
       });
+
+      currentRegion = null;
     }
 
     function createMenuLink(label, url = PLACEHOLDER_URL) {
