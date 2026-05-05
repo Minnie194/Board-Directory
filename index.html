@@ -1,952 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Regional Board Navigator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Board Directory</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
-    :root {
-      --bg: #eef2f7;
-      --panel: #ffffff;
-      --panel-2: #f7f9fc;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #d8e0ea;
-      --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-      --apac: #7c3aed;
-      --emea: #2563eb;
-      --na: #16a34a;
-      --latam: #ea580c;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(180deg, #f4f7fb 0%, #e9eef5 100%);
-      color: var(--text);
-    }
-
-    .wrap {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .dashboard {
-      width: 100%;
-      max-width: 1180px;
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(216, 224, 234, 0.9);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 28px;
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .header h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-      line-height: 1.15;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .header p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1.55fr 0.95fr;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .map-card,
-    .list-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
-    }
-
-    .section-title {
-      margin: 0 0 14px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .map-shell {
-      background: var(--panel-2);
-      border: 1px solid #e6ebf2;
-      border-radius: 18px;
-      padding: 10px;
-      transition: all 0.25s ease;
-    }
-
-    .map-stage {
-      display: block;
-    }
-
-    .map-top {
-      border-radius: 16px;
-      overflow: hidden;
-      background: #eef2f7;
-    }
-
-    .map-visual {
-      background: linear-gradient(180deg, #fbfcfe 0%, #f2f6fb 100%);
-      border: 1px solid #e5ebf3;
-      border-radius: 18px;
-      padding: 10px;
-    }
-
-    svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .region {
-      cursor: pointer;
-      transition: transform 0.18s ease, opacity 0.18s ease, filter 0.18s ease;
-      transform-origin: center;
-    }
-
-    .region:hover {
-      opacity: 0.94;
-      transform: translateY(-2px) scale(1.01);
-      filter: brightness(1.03);
-    }
-
-    .region.active {
-      transform: translateY(-2px) scale(1.03);
-      filter: brightness(1.02);
-    }
-
-    .region-label {
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      fill: white;
-      text-anchor: middle;
-      pointer-events: none;
-    }
-
-    .region-sub {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      fill: rgba(255, 255, 255, 0.9);
-      text-anchor: middle;
-      pointer-events: none;
-    }
-
-    .map-details {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding-top 0.25s ease;
-      padding-top: 0;
-    }
-
-    .map-details.open {
-      max-height: 1400px;
-      padding-top: 14px;
-    }
-
-    .map-details-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-    }
-
-    .map-details-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .map-details-header h3 {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.15;
-    }
-
-    .map-details-header p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .close-map-details {
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font: inherit;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .close-map-details:hover {
-      background: #eef2f7;
-    }
-
-    .country-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .country-chip {
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-      border-radius: 999px;
-      padding: 9px 12px;
-      text-align: left;
-      cursor: pointer;
-      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
-      font: inherit;
-      color: var(--text);
-      font-size: 13px;
-    }
-
-    .country-chip:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-      border-color: #c7d2e0;
-    }
-
-    .accordion {
-      display: grid;
-      gap: 12px;
-    }
-
-    .accordion-item {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-      overflow: hidden;
-    }
-
-    .accordion-trigger {
-      width: 100%;
-      border: 0;
-      background: transparent;
-      padding: 16px 18px;
-      text-align: left;
-      cursor: pointer;
-      font: inherit;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      transition: background 0.18s ease;
-    }
-
-    .accordion-trigger:hover {
-      background: rgba(37, 99, 235, 0.03);
-    }
-
-    .accordion-title-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .accordion-title {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .accordion-count {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .accordion-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--muted);
-      background: #fff;
-      flex-shrink: 0;
-    }
-
-    .accordion-panel {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.28s ease;
-      border-top: 1px solid transparent;
-    }
-
-    .accordion-item.open .accordion-panel {
-      border-top: 1px solid #e8edf4;
-      max-height: 1200px;
-    }
-
-    .accordion-links {
-      padding: 14px 16px 16px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .menu-link {
-      width: 100%;
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 11px 12px;
-      text-align: left;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-      font: inherit;
-      color: var(--text);
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .menu-link:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
-      border-color: #cdd8e6;
-    }
-
-    .menu-link-label {
-      font-weight: 600;
-      line-height: 1.35;
-    }
-
-    .menu-link-tag {
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .helper {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: #f8fafc;
-      border: 1px dashed #d6dfeb;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    @media (max-width: 980px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .dashboard {
-        padding: 18px;
-        border-radius: 18px;
-      }
-
-      .map-card,
-      .list-card {
-        padding: 14px;
-        border-radius: 18px;
-      }
-
-      .region-label {
-        font-size: 14px;
-      }
-
-      .region-sub {
-        font-size: 10px;
-      }
-
-      .map-details-header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
+    body { font-family: 'DM Sans', sans-serif; background: #f1f5f9; margin: 0; }
+    .panel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .chevron { transition: transform 0.3s ease; }
+    .rotate { transform: rotate(180deg); }
+    .board-link { display: block; padding: 10px 0; color: #0f172a; text-decoration: none; cursor: pointer; }
+    .board-link:hover { text-decoration: underline; }
+    .board-link + .board-link { border-top: 1px solid #e2e8f0; }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <div class="dashboard">
-      <div class="header">
-        <h1>Regional Board Navigator</h1>
-        <p>Select a region from the map or open one of the report sections.</p>
-      </div>
 
-      <div class="layout">
-        <div class="map-card">
-          <h2 class="section-title">World Map</h2>
+<body class="p-4">
+<div class="max-w-3xl mx-auto">
+<div class="space-y-4">
 
-          <div class="map-shell">
-            <div class="map-stage">
-              <div class="map-top">
-                <div class="map-visual">
-                  <svg viewBox="0 0 1000 520" aria-label="Clickable regional map">
-                    <g opacity="0.18" fill="#94a3b8">
-                      <path d="M77 158c18-20 34-38 63-44 41-9 71 10 96 7 19-3 29-16 49-14 35 3 50 35 63 58 15 27 31 44 21 67-13 29-67 28-84 53-15 22 6 52-12 69-19 18-52 9-82 0-39-11-90-34-111-76-18-36-21-87-3-120z"/>
-                      <path d="M403 120c40-16 90-21 134-14 25 4 44 16 70 19 33 4 71-6 103 5 35 12 61 41 81 72 22 35 25 72 8 104-18 32-53 57-92 66-34 8-74 4-107 16-33 12-55 38-89 48-32 10-73 3-96-23-24 27-23-68-21-104 3-43 7-86 9-129z"/>
-                      <path d="M741 162c25-27 50-46 89-49 28-2 60 8 86 21 39 21 71 59 82 101 10 40-7 73-39 98-31 24-73 41-112 44-41 3-76-17-103-46-21-22-38-51-36-82 2-34 13-64 33-87z"/>
-                      <path d="M705 362c22-8 45-6 64 4 18 10 32 29 39 49 7 20 8 45-6 61-14 16-40 22-62 17-21-4-41-18-50-38-9-20-6-45 15-61z"/>
-                      <path d="M290 394c19-9 41-12 60-5 17 6 33 23 34 42 1 19-10 37-25 49-18 14-42 24-64 19-20-4-36-20-38-41-2-27 11-52 33-64z"/>
-                    </g>
+<!-- Trackers -->
+<div>
+<button class="accordion-btn w-full bg-blue-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="trackers">
+<span class="flex gap-3 items-center font-semibold text-lg">
+<i data-lucide="activity"></i> Trackers
+</span>
+<i data-lucide="chevron-right" class="chevron"></i>
+</button>
 
-                    <g id="region-na" class="region" role="button" tabindex="0" aria-label="North America">
-                      <path fill="var(--na)" d="M90 145 C130 105, 205 88, 275 112 C320 128, 360 164, 369 207 C377 245, 353 273, 312 291 C278 306, 257 327, 223 332 C176 338, 129 319, 100 284 C71 250, 57 182, 90 145 Z"></path>
-                      <text class="region-label" x="218" y="205">NORTH AMERICA</text>
-                      <text class="region-sub" x="218" y="226">Open region options</text>
-                    </g>
+<div id="trackers" class="panel mt-2">
+<div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1861276763'">K&T Tracker</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1789025441'">Criminal Referrals</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1788262726'">Application Takedowns</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1797290553'">IWL</a>
+</div>
+</div>
+</div>
 
-                    <g id="region-latam" class="region" role="button" tabindex="0" aria-label="Latin America">
-                      <path fill="var(--latam)" d="M294 310 C327 315, 357 342, 367 378 C378 417, 366 458, 339 486 C320 506, 291 514, 270 505 C248 495, 237 470, 244 445 C250 424, 267 408, 271 387 C275 364, 259 333, 294 310 Z"></path>
-                      <text class="region-label" x="306" y="400">LATAM</text>
-                      <text class="region-sub" x="306" y="421">Open region options</text>
-                    </g>
+<!-- Reporting -->
+<div>
+<button class="accordion-btn w-full bg-cyan-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="reporting">
+<span class="flex gap-3 items-center font-semibold text-lg">
+<i data-lucide="bar-chart-3"></i> Reporting
+</span>
+<i data-lucide="chevron-right" class="chevron"></i>
+</button>
 
-                    <g id="region-emea" class="region" role="button" tabindex="0" aria-label="EMEA">
-                      <path fill="var(--emea)" d="M420 132 C482 105, 571 102, 640 124 C704 145, 749 188, 759 237 C769 287, 739 332, 680 354 C621 377, 545 376, 488 355 C439 338, 403 304, 392 261 C380 214, 382 149, 420 132 Z"></path>
-                      <text class="region-label" x="575" y="228">EMEA</text>
-                      <text class="region-sub" x="575" y="249">Europe · Middle East · Africa</text>
-                    </g>
+<div id="reporting" class="panel mt-2">
+<div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1909180597'">Weekly Updates</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/5092300043'">ACE Action Plans & Litigation Strategy</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1860764866'">Repository</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/5093698779'">Intermediary Program Monthly Reports</a>
+</div>
+</div>
+</div>
 
-                    <g id="region-apac" class="region" role="button" tabindex="0" aria-label="APAC">
-                      <path fill="var(--apac)" d="M740 143 C786 111, 849 103, 903 116 C949 127, 987 155, 995 195 C1003 234, 978 272, 937 295 C895 319, 842 324, 794 312 C744 300, 698 267, 690 221 C682 188, 704 168, 740 143 Z"></path>
-                      <path fill="var(--apac)" d="M804 336 C825 326, 852 326, 873 336 C894 346, 907 367, 904 389 C901 410, 885 429, 862 436 C839 442, 812 436, 793 421 C774 405, 768 381, 776 362 C782 350, 792 342, 804 336 Z"></path>
-                      <text class="region-label" x="844" y="214">APAC</text>
-                      <text class="region-sub" x="844" y="235">Asia-Pacific</text>
-                    </g>
-                  </svg>
-                </div>
-              </div>
+<!-- Landscapes -->
+<div>
+<button class="accordion-btn w-full bg-purple-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="landscapes">
+<span class="flex gap-3 items-center font-semibold text-lg">
+<i data-lucide="map"></i> Landscapes
+</span>
+<i data-lucide="chevron-right" class="chevron"></i>
+</button>
 
-              <div id="mapDetails" class="map-details">
-                <div class="map-details-card">
-                  <div class="map-details-header">
-                    <div>
-                      <h3 id="mapDetailsTitle">Region</h3>
-                      <p id="mapDetailsSubtitle">Select a country or administrative division.</p>
-                    </div>
-                    <button class="close-map-details" type="button" id="closeMapDetails">Close</button>
-                  </div>
+<div id="landscapes" class="panel mt-2">
+<div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/2140925236'">Top List Directory</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/5090009562'">APP Landscapes</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/5089902853'">Streaming Global View</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/5089324560'">IPTV Global View</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/5090006618'">APK Global View</a>
+</div>
+</div>
+</div>
 
-                  <div id="countryGrid" class="country-grid"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- GSS -->
+<div>
+<button class="accordion-btn w-full bg-emerald-600 text-white rounded-2xl px-5 py-4 flex justify-between items-center" data-target="gss">
+<span class="flex gap-3 items-center font-semibold text-lg">
+<i data-lucide="shield-check"></i> GSS
+</span>
+<i data-lucide="chevron-right" class="chevron"></i>
+</button>
 
-        <div class="list-card">
-          <h2 class="section-title">Reports Menu</h2>
+<div id="gss" class="panel mt-2">
+<div class="bg-white rounded-2xl shadow-sm px-6 py-3">
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1735781645'">SB Around the World</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1901785736'">SB Cases</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1736947920'">CJEU Overview</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/2073211338'">AI & Copyright Case Law</a>
+<a class="board-link" onclick="window.top.location.href='https://motionpictures.monday.com/boards/1959576984'">Member Action Required (GSS)</a>
+</div>
+</div>
+</div>
 
-          <div id="accordion" class="accordion"></div>
+<div class="border-t border-slate-300 my-2"></div>
 
-        </div>
-      </div>
-    </div>
-  </div>
+<a onclick="window.top.location.href='https://wkf.ms/3KzCIBi'"
+class="inline-block bg-blue-100 text-blue-700 rounded-xl px-4 py-2 text-sm font-semibold hover:bg-blue-200 transition">
+Submit APK for Takedown
+</a>
 
-  <script>
-    const PLACEHOLDER_URL = "";
-    let currentRegion = null;
+</div>
+</div>
 
-    const regionData = {
-      apac: {
-        title: "APAC",
-        subtitle: "Asia - Pacific",
-        items: [
-          "Brunei",
-          "Cambodia",
-          "China",
-          "Hong Kong",
-          "India",
-          "Indonesia",
-          "Japan",
-          "Malaysia",
-          "Myanmar",
-          "New Zealand",
-          "Philippines",
-          "Singapore",
-          "South Korea",
-          "Sri Lanka",
-          "Taiwan",
-          "Thailand",
-          "Vietnam"
-        ]
-      },
-      latam: {
-        title: "LATAM",
-        subtitle: "Latin America",
-        items: [
-          "Argentina",
-          "Barbados",
-          "Belize",
-          "Bolivia",
-          "Brazil",
-          "Chile",
-          "Colombia",
-          "Costa Rica",
-          "Dominican Republic",
-          "Ecuador",
-          "El Salvador",
-          "Guatemala",
-          "Honduras",
-          "Jamaica",
-          "Mexico",
-          "Panama",
-          "Paraguay",
-          "Peru",
-          "Uruguay",
-          "Venezuela"
-        ]
-      },
-      na: {
-        title: "NA",
-        subtitle: "North America",
-        items: [
-          "United States",
-          "Alabama",
-          "Alaska",
-          "Arizona",
-          "Arkansas",
-          "California",
-          "Colorado",
-          "Connecticut",
-          "Delaware",
-          "District of Columbia",
-          "Florida",
-          "Georgia",
-          "Hawaii",
-          "Idaho",
-          "Illinois",
-          "Indiana",
-          "Iowa",
-          "Kansas",
-          "Kentucky",
-          "Louisiana",
-          "Maine",
-          "Maryland",
-          "Massachusetts",
-          "Michigan",
-          "Minnesota",
-          "Mississippi",
-          "Missouri",
-          "Montana",
-          "Nebraska",
-          "Nevada",
-          "New Hampshire",
-          "New Jersey",
-          "New Mexico",
-          "New York",
-          "North Carolina",
-          "North Dakota",
-          "Ohio",
-          "Oklahoma",
-          "Oregon",
-          "Pennsylvania",
-          "Puerto Rico",
-          "Rhode Island",
-          "South Carolina",
-          "South Dakota",
-          "Tennessee",
-          "Texas",
-          "Utah",
-          "Vermont",
-          "Virginia",
-          "Washington",
-          "West Virginia",
-          "Wisconsin",
-          "Wyoming",
-          "Canada",
-          "Alberta",
-          "British Columbia",
-          "Manitoba",
-          "New Brunswick",
-          "Newfoundland and Labrador",
-          "Nova Scotia",
-          "Ontario",
-          "Prince Edward Island",
-          "Quebec",
-          "Saskatchewan"
-        ]
-      },
-      emea: {
-        title: "EMEA",
-        subtitle: "Europe, Middle East, and Africa",
-        items: [
-          "Africa",
-          "Algeria",
-          "Austria",
-          "Belgium",
-          "Bulgaria",
-          "Croatia",
-          "Cyprus",
-          "Czech Republic",
-          "Denmark",
-          "Egypt",
-          "Estonia",
-          "European Union",
-          "Finland",
-          "France",
-          "Germany",
-          "Ghana",
-          "Greece",
-          "Hungary",
-          "Iceland",
-          "Ireland",
-          "Israel",
-          "Italy",
-          "Ivory Coast",
-          "Jordan",
-          "Kenya",
-          "Kyrgyz Republic",
-          "Kuwait",
-          "Latvia",
-          "Lebanon",
-          "Lithuania",
-          "Luxembourg",
-          "Malta",
-          "Morocco",
-          "Netherlands",
-          "Nigeria",
-          "Norway",
-          "Pakistan",
-          "Poland",
-          "Portugal",
-          "Romania",
-          "Russia",
-          "Saudi Arabia",
-          "Slovakia",
-          "Slovenia",
-          "South Africa",
-          "Spain",
-          "Sweden",
-          "Switzerland",
-          "Tajikistan",
-          "Turkey",
-          "Turkmenistan",
-          "Ukraine",
-          "United Arab Emirates",
-          "United Kingdom",
-          "Uzbekistan"
-        ]
-      }
-    };
+<script>
+lucide.createIcons();
 
-    const reportSections = [
-      {
-        title: "ACE Piracy Survey",
-        items: [
-          "Argentina",
-          "Australia",
-          "Brazil",
-          "Canada",
-          "China",
-          "France",
-          "Germany",
-          "India",
-          "Italy",
-          "Mexico",
-          "Poland",
-          "Russia",
-          "South Korea",
-          "Spain",
-          "Sweden",
-          "United Kingdom (UK)",
-          "United States (USA)",
-          "Cross-Market"
-        ]
-      },
-      {
-        title: "Walnut Deep Dive Studies",
-        items: [
-          "Africa & the Middle East (Egypt, Nigeria, South Africa, Turkey)",
-          "Asia Pacific (Australia, India, South Korea)",
-          "China",
-          "Europe Region (France, Germany, Poland, Spain, UK)",
-          "LaTam (Brazil, Mexico)",
-          "United States (USA)",
-          "Global Report",
-          "Sports Piracy"
-        ]
-      },
-      {
-        title: "Piracy Trends Reports",
-        items: [
-          "Argentina",
-          "Australia",
-          "Brazil",
-          "Canada",
-          "China",
-          "France",
-          "Germany",
-          "India",
-          "Italy",
-          "Japan",
-          "Mexico",
-          "Netherlands",
-          "Poland",
-          "Russia",
-          "South Africa",
-          "South Korea",
-          "Spain",
-          "Sweden",
-          "United Kingdom (UK)",
-          "United States (USA)",
-          "Vietnam",
-          "Cross-Country Summary"
-        ]
-      },
-      {
-        title: "Piracy Trends Reports: Additional Countries",
-        items: [
-          "Colombia",
-          "Czechia (Czech Republic)",
-          "Denmark",
-          "Ecuador",
-          "Egypt",
-          "Finland",
-          "Hungary",
-          "Indonesia",
-          "Ivory Coast",
-          "Malaysia",
-          "Morocco",
-          "New Zealand",
-          "Nigeria",
-          "Norway",
-          "Pakistan",
-          "Philippines",
-          "Romania",
-          "Saudi Arabia",
-          "Singapore",
-          "Slovakia",
-          "Taiwan",
-          "Thailand",
-          "Turkey",
-          "Ukraine",
-          "United Arab Emirates (UAE)"
-        ]
-      }
-    ];
+document.querySelectorAll('.accordion-btn').forEach(btn => {
+btn.addEventListener('click', () => {
+const panel = document.getElementById(btn.dataset.target);
+const icon = btn.querySelector('.chevron');
+const isOpen = panel.style.maxHeight;
 
-    function navigateTop(url) {
-      if (url && url.trim() !== "") {
-        window.top.location.href = url;
-      }
-    }
+document.querySelectorAll('.panel').forEach(p => p.style.maxHeight = null);
+document.querySelectorAll('.chevron').forEach(c => c.classList.remove('rotate'));
 
-    function createCountryChip(label, url = PLACEHOLDER_URL) {
-      const button = document.createElement("button");
-      button.className = "country-chip";
-      button.type = "button";
-      button.textContent = label;
-      button.onclick = function () {
-        navigateTop(url);
-      };
-      return button;
-    }
+if (!isOpen) {
+panel.style.maxHeight = panel.scrollHeight + 'px';
+icon.classList.add('rotate');
+}
+});
+});
+</script>
 
-    function openRegion(regionKey) {
-      const details = document.getElementById("mapDetails");
-
-      if (currentRegion === regionKey && details.classList.contains("open")) {
-        closeRegion();
-        return;
-      }
-
-      const region = regionData[regionKey];
-      const title = document.getElementById("mapDetailsTitle");
-      const subtitle = document.getElementById("mapDetailsSubtitle");
-      const grid = document.getElementById("countryGrid");
-
-      title.textContent = region.title;
-      subtitle.textContent = region.subtitle + " — select a country or administrative division.";
-      grid.innerHTML = "";
-
-      region.items.forEach(function(item) {
-        grid.appendChild(createCountryChip(item));
-      });
-
-      details.classList.add("open");
-
-      document.querySelectorAll(".region").forEach(function(el) {
-        el.classList.remove("active");
-      });
-
-      const active = document.getElementById("region-" + regionKey);
-      if (active) {
-        active.classList.add("active");
-      }
-
-      currentRegion = regionKey;
-    }
-
-    function closeRegion() {
-      document.getElementById("mapDetails").classList.remove("open");
-
-      document.querySelectorAll(".region").forEach(function(el) {
-        el.classList.remove("active");
-      });
-
-      currentRegion = null;
-    }
-
-    function createMenuLink(label, url = PLACEHOLDER_URL) {
-      const button = document.createElement("button");
-      button.className = "menu-link";
-      button.type = "button";
-      button.onclick = function () {
-        navigateTop(url);
-      };
-
-      const labelSpan = document.createElement("span");
-      labelSpan.className = "menu-link-label";
-      labelSpan.textContent = label;
-
-      const tagSpan = document.createElement("span");
-      tagSpan.className = "menu-link-tag";
-      tagSpan.textContent = "Link";
-
-      button.appendChild(labelSpan);
-      button.appendChild(tagSpan);
-
-      return button;
-    }
-
-    function buildAccordion() {
-      const accordion = document.getElementById("accordion");
-
-      reportSections.forEach(function(section, index) {
-        const item = document.createElement("div");
-        item.className = "accordion-item";
-
-        const trigger = document.createElement("button");
-        trigger.className = "accordion-trigger";
-        trigger.type = "button";
-
-        const titleWrap = document.createElement("span");
-        titleWrap.className = "accordion-title-wrap";
-
-        const title = document.createElement("span");
-        title.className = "accordion-title";
-        title.textContent = section.title;
-
-        const count = document.createElement("span");
-        count.className = "accordion-count";
-        count.textContent = section.items.length + " options";
-
-        titleWrap.appendChild(title);
-        titleWrap.appendChild(count);
-
-        const icon = document.createElement("span");
-        icon.className = "accordion-icon";
-        icon.textContent = "+";
-
-        trigger.appendChild(titleWrap);
-        trigger.appendChild(icon);
-
-        const panel = document.createElement("div");
-        panel.className = "accordion-panel";
-
-        const links = document.createElement("div");
-        links.className = "accordion-links";
-
-        section.items.forEach(function(entry) {
-          links.appendChild(createMenuLink(entry));
-        });
-
-        panel.appendChild(links);
-
-        trigger.addEventListener("click", function() {
-          const isOpen = item.classList.contains("open");
-
-          document.querySelectorAll(".accordion-item").forEach(function(otherItem) {
-            otherItem.classList.remove("open");
-            const otherIcon = otherItem.querySelector(".accordion-icon");
-            if (otherIcon) {
-              otherIcon.textContent = "+";
-            }
-          });
-
-          if (!isOpen) {
-            item.classList.add("open");
-            icon.textContent = "−";
-          }
-        });
-
-        item.appendChild(trigger);
-        item.appendChild(panel);
-        accordion.appendChild(item);
-
-        if (index === 0) {
-          item.classList.add("open");
-          icon.textContent = "−";
-        }
-      });
-    }
-
-    function bindRegion(regionId, regionKey) {
-      const region = document.getElementById(regionId);
-      if (!region) return;
-
-      region.addEventListener("click", function() {
-        openRegion(regionKey);
-      });
-
-      region.addEventListener("keydown", function(event) {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openRegion(regionKey);
-        }
-      });
-    }
-
-    document.getElementById("closeMapDetails").addEventListener("click", closeRegion);
-
-    bindRegion("region-apac", "apac");
-    bindRegion("region-emea", "emea");
-    bindRegion("region-na", "na");
-    bindRegion("region-latam", "latam");
-
-    buildAccordion();
-  </script>
 </body>
 </html>
